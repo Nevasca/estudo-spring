@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Dar um nome ou id e referenciar a classe de implementacao (nao a de interface) -->
+	<bean name="clienteRepository" class="br.com.estudo.repository.HibernateClienteRepositoryImpl"/>
+	
+<!-- 	<bean name="clienteService" class="br.com.estudo.service.ClienteServiceImpl"> -->
+		<!-- Pega a propriedade do setClienteRepository e referencia ao bean criado acima -->
+<!-- 		<property name="clienteRepository" ref="clienteRepository"></property> -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean name="clienteService" class="br.com.estudo.service.ClienteServiceImpl"> -->
+		<!-- Pega o construtor e referencia o primeiro parametro (index = 0) ao bean criado acima -->
+<!-- 		<constructor-arg index="0" ref="clienteRepository" /> -->
+<!-- 	</bean> -->
+	
+	<!-- Autowire = pega as referencias de bean automaticamente. constructor precisa de um construtor com parametro -->
+<!-- 	<bean name="clienteService" class="br.com.estudo.service.ClienteServiceImpl" autowire="constructor"> -->
+<!-- 	</bean> -->
+	
+	<!-- Autowire = pega as referencias de bean automaticamente. By type precisa de um construtor padrão (sem argumentos) e um set -->
+	<bean name="clienteService" class="br.com.estudo.service.ClienteServiceImpl" autowire="byType">
+	</bean>
+	
+</beans>
