@@ -9,13 +9,62 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<mvc:annotation-driven/> <!-- Usa anotacoes para configurar a aplicacao -->
-	<context:component-scan base-package="br.com.estudo.controller"/> <!-- Onde procurar essas anotacoes? -->
+	<context:component-scan base-package="br.com.estudo"/> <!-- Onde procurar essas anotacoes? -->		
+	
+	<!-- Configuração para aceitar json request ou xml request. Value é a ordem de chamada do resolver -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="0"></property>
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManager">
+				<constructor-arg>
+					<bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+						<constructor-arg>
+							<map>
+								<entry key="json" value="application/json"/>
+								<entry key="xml" value="application/xml"/>
+							</map>
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<constructor-arg>
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+							<property name="autodetectAnnotations" value="true"></property>
+						</bean>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- Para interceptar o parametro de localizacao. 'language' é o mesmo nome dado ao parametro setado na view ?language=en -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="language"></bean>
+	</mvc:interceptors>
+	
+	<!-- Em qual local está (para fazer internacionalizacao -->	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en"></bean>
+	
+	<!-- Resource Bundle (outras linguagens) 'messages' é o mesmo nome do arquivo -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="messages"></bean>
+	
+	<!-- Arquivos estáticos, como CSS, Scripts, Bibliotecas -->
+	<mvc:resources location="resources" mapping="/resources/**"></mvc:resources>	
+	
+	<!-- Onde os jsp estao -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" p:order="1"></bean>
+		
 	
 <!-- 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
 <!-- 		<property name="prefix" value="/WEB-INF/views/"></property> -->
 <!-- 		<property name="suffix" value=".jsp"></property> -->
 <!-- 	</bean> -->
-	<!-- Onde os jsp estao -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp"></bean>
+	
 	
 </beans>
