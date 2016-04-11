@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<mvc:annotation-driven/> <!-- Usa anotacoes para configurar a aplicacao -->
-	<context:component-scan base-package="br.com.estudo"/> <!-- Onde procurar essas anotacoes? -->		
+	<context:component-scan base-package="br.com.estudo.controller"/> <!-- Onde procurar essas anotacoes? -->	
 	
 	<!-- Configuração para aceitar json request ou xml request. Value é a ordem de chamada do resolver -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
