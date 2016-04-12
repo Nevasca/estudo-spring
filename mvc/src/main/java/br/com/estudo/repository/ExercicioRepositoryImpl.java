@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import br.com.estudo.model.Exercicio;
 
-@Repository("exercicioRepository")
-public class ExercicioRepositoryImpl implements ExercicioRepository {
-
+//Classe antiga, antes de utilizar Spring Data JPA
+//@Repository("exercicioRepository")
+public class ExercicioRepositoryImpl /*implements ExercicioRepository*/ {
+	
+	/*
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -19,5 +21,5 @@ public class ExercicioRepositoryImpl implements ExercicioRepository {
 		em.flush();		
 		return exercicio;
 	}
-
+	*/
 }
